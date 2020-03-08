@@ -1,32 +1,45 @@
 import React from 'react';
-import thunkMiddleware from "redux-thunk";
-import { createLogger } from "redux-logger";
-import { createStore, applyMiddleware } from "redux";
-import rootReducer from "./reducers/Reducers.js";
-import { Provider } from "react-redux";
-import { library } from "@fortawesome/fontawesome-svg-core";
+import { Route, Router } from "react-router-dom";
+import { connect } from "react-redux";
+import history from "./history";
+import Nav from "./components/Nav/Nav";
+import Pages from "./routes/Pages";
+import { checkAuthentication } from "./reducers/AuthDuck";
 
 import './App.css';
 
-const loggerMiddleware = createLogger();
-const store = createStore(
-  rootReducer,
-  applyMiddleware(
-    thunkMiddleware,
-    loggerMiddleware
-  )
-);
+const App = ({
+    checkAuthenticationConnect,
+    isAuthenticated
+}) => {
 
-function App() {
-  return (
-    <div className="App" store={store}>
-      <ul>
-        <li>CMS using firebase: https://hackernoon.com/how-i-built-a-content-management-system-for-a-react-app-in-one-day-269df17f5509</li>
-        <li>Async Await Integration</li>
-        <li>Router either based on hash or direct / based</li>
-      </ul>
-    </div>
-  );
+    // TODO: Check why required
+    React.useEffect(() => {
+        checkAuthenticationConnect();
+    }, []);
+
+    const app = isAuthenticated !== null ? (
+        <Router history={history}>
+            <Nav />
+            <Route component={Pages} />
+        </Router>
+    ) : null;
+    return (
+        <div className="App">
+            {app}
+        </div>
+    );
 }
 
-export default App;
+const mapStateToProps = (state) => ({
+    isAuthenticated: state.authState.isAuthenticated
+});
+
+const mapDispatchToProps = {
+    checkAuthenticationConnect: checkAuthentication
+};
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps,
+)(App);
