@@ -1,7 +1,7 @@
 import * as React from "react";
 import { connect } from "react-redux";
 import { Route } from "react-router-dom";
-import history from "../history";
+import history from "history.js";
 
 const LoggedInRoute = ({
     component: Component,

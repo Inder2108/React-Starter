@@ -1,6 +1,6 @@
 import * as React from "react";
 import { connect } from "react-redux";
-import { logIn } from "../../reducers/AuthDuck.js";
+import { logIn } from "reducers/AuthDuck.js";
 
 const LogIn = ({ logInConnect }) => (
     <>

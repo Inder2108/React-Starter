@@ -2,7 +2,7 @@ import React from 'react';
 import { Route, Router } from "react-router-dom";
 import { connect } from "react-redux";
 import history from "./history";
-import Nav from "./components/Nav/Nav";
+import NavContainer from "./components/Nav/NavContainer";
 import Pages from "./routes/Pages";
 import { checkAuthentication } from "./reducers/AuthDuck";
 
@@ -20,7 +20,7 @@ const App = ({
 
     const app = isAuthenticated !== null ? (
         <Router history={history}>
-            <Nav />
+            <NavContainer />
             <Route component={Pages} />
         </Router>
     ) : null;

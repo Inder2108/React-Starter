@@ -1,6 +1,5 @@
 import * as React from "react";
-import { connect } from "react-redux";
-import history from '../../history';
+import history from 'history.js';
 
 let navLinkJSX = (link, text) => (
     <li class="nav-item">
@@ -8,33 +7,33 @@ let navLinkJSX = (link, text) => (
     </li>
 );
 
-const Nav = ({ isAuthenticated, uuid }) => {
-    const logInOut = isAuthenticated ? navLinkJSX("/log-out", "Log Out") : navLinkJSX("/log-in", "Log In");
-    const mainLinks = isAuthenticated ? navLinkJSX("/home", "Home") : (
+const Nav = ({ isAuthenticated, uuid, logOut }) => {
+    const links = isAuthenticated ? (
         <>
-            {navLinkJSX("/", "Landing")}
-            {navLinkJSX("/about", "About")}
+            {navLinkJSX("/home", "Home")}
+            {
+                <li class="nav-item">
+                    <a class="nav-link" onClick={e => { e.preventDefault(); logOut(); }}>Log Out</a>
+                </li>
+            }
         </>
-    );
+    ) : (
+            <>
+                {navLinkJSX("/about", "About")}
+                {navLinkJSX("/log-in", "Log In")}
+            </>
+        );
     return (
         <div class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-            <p></p>
+            <a class="navbar-brand" href="#">Site Title</a>
             <ul class="navbar-nav mr-auto">
+                {links}
                 <li class="nav-item active">
                     <a class="nav-link">Auth state: {isAuthenticated ? `Logged in user: ${uuid}` : "Logged out"}</a>
                 </li>
-                {mainLinks}
-                {navLinkJSX("/terms", "Terms")}
-                {navLinkJSX("/broken-link", "Broken Link")}
-                {logInOut}
             </ul>
         </div>
     );
 };
-const mapStateToProps = (state) => ({
-    uuid: state.uuid,
-    isAuthenticated: state.authState.isAuthenticated,
-});
-export default connect(
-    mapStateToProps,
-)(Nav);
+
+export default Nav;
