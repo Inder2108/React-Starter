@@ -1,0 +1,7 @@
+.home-page-content {
+    position: fixed;
+    top: 56px;
+    max-height: calc(100vh - 56px);
+    width: 100%;
+    overflow-y: scroll;
+}
