@@ -1,13 +1,6 @@
-import * as React from "react";
 import { connect } from "react-redux";
 import { logIn } from "reducers/AuthDuck.js";
-
-const LogIn = ({ logInConnect }) => (
-    <>
-        <p>Login page</p>
-        <button onClick={logInConnect}>log me in</button>
-    </>
-);
+import LoginPage from "./LoginPage";
 
 const mapDispatchToProps = {
     logInConnect: logIn
@@ -16,4 +9,4 @@ const mapDispatchToProps = {
 export default connect(
     null,
     mapDispatchToProps,
-)(LogIn);
+)(LoginPage);

@@ -10,24 +10,14 @@ const LoggedOutRoute = ({
 }) => {
     if (isAuthenticated === true) {
         history.push("/home");
-        alert("this is a logged out route, you are logged in, redirected to home page");
+        console.log("this is a logged out route, you are logged in, redirected to home page");
     }
     return (
-        <>
-            <header>
-                Logged Out Header
-            </header>
-            <Route
-                render={otherProps => (
-                    <>
-                        <Component {...otherProps} />
-                    </>
-                )}
-            />
-            <footer>
-                Logged Out Footer
-            </footer>
-        </>
+        <Route
+            render={otherProps => (
+                <Component {...otherProps} />
+            )}
+        />
     );
 };
 const mapStateToProps = (state) => ({
